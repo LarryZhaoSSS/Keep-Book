@@ -3,7 +3,8 @@ import './App.less'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import PriceList from './components/PriceList'
 import ViewTab from './components/ViewTab'
-import { LIST_VIEW, CHART_VIEW } from './utility'
+import MonthPicker from './components/MonthPicker'
+import { LIST_VIEW } from './utility'
 const items = [
   {
     id: 1,
@@ -49,6 +50,7 @@ function App() {
           console.log(view)
         }}
       />
+      <MonthPicker year={2018} month={9} />
     </div>
   )
 }
