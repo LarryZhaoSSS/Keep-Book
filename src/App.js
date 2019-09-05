@@ -50,7 +50,13 @@ function App() {
           console.log(view)
         }}
       />
-      <MonthPicker year={2018} month={9} />
+      <MonthPicker
+        year={2018}
+        month={9}
+        onChange={(year, month) => {
+          console.log(year, month)
+        }}
+      />
     </div>
   )
 }
