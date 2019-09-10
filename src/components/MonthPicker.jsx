@@ -5,7 +5,7 @@ class MonthPicker extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      ipOpen: false,
+      isOpen: false,
       selectedYear: this.props.year,
       selectedMonth: this.props.month
     }
@@ -43,12 +43,12 @@ class MonthPicker extends React.Component {
           className='btn btn-lg btn-secondary dropdown-toggle'
           onClick={this.toggleDropDown}
         >
-          {`${year}年  ${padLeft(month)}月`}
+          {`${year}年 ${padLeft(month)}月`}
         </button>
         {isOpen && (
           <div className='dropdown-menu' style={{ display: 'block' }}>
             <div className='row'>
-              <div className='col border-right'>
+              <div className='col border-right years-range'>
                 {yearRange.map((yearNumber, index) => {
                   return (
                     <span
@@ -67,7 +67,7 @@ class MonthPicker extends React.Component {
                   )
                 })}
               </div>
-              <div className='col'>
+              <div className='col months-range'>
                 {monthRange.map((monthNumber, index) => {
                   return (
                     <span
