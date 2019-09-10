@@ -25,7 +25,7 @@ const PriceList = ({ items, onModifyItem, onDeleteItem }) => {
           </span>
           <span className='col-2'>{item.date}</span>
           <span
-            className='col-1'
+            className='col-1 icon-click'
             onClick={() => {
               onModifyItem(item)
             }}
@@ -42,7 +42,7 @@ const PriceList = ({ items, onModifyItem, onDeleteItem }) => {
             onClick={() => {
               onDeleteItem(item)
             }}
-            className='col-1'
+            className='col-1 icon-click'
           >
             <Ionicon
               className='rounded-circle'
@@ -63,6 +63,8 @@ PriceList.propTypes = {
   onDeleteItem: PropTypes.func.isRequired
 }
 PriceList.defaultProps = {
-  onModifyItem:()=>{alert('3')}
+  onModifyItem: () => {
+    alert('3')
+  }
 }
 export default PriceList
