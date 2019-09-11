@@ -31,13 +31,30 @@ class MonthPicker extends React.Component {
     })
     this.props.onChange(this.state.selectedYear, monthNumber)
   }
+  handleClick = event => {
+    if (this.node.contains(event.target)) {
+      return
+    }
+    this.setState({
+      isOpen: false
+    })
+  }
+  componentDidMount() {
+    document.addEventListener('click', this.handleClick, false)
+  }
+  componentWillUnmount() {
+    document.removeEventListener('click', this.handleClick, false)
+  }
   render() {
     const { year, month } = this.props
     const { isOpen, selectedYear, selectedMonth } = this.state
     const monthRange = range(12, 1)
     const yearRange = range(9, -4).map(number => number + year)
     return (
-      <div className='dropdown month-picker-component'>
+      <div
+        className='dropdown month-picker-component'
+        ref={ref => (this.node = ref)}
+      >
         <h4>选择月份</h4>
         <button
           className='btn btn-lg btn-secondary dropdown-toggle'
