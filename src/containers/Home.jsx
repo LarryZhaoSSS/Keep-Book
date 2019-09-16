@@ -55,7 +55,7 @@ class Home extends React.Component {
     super(props)
     this.state = {
       items,
-      currentDate: parseToYearAndMonth(),
+      currentDate: parseToYearAndMonth('2019/10/01'),
       tabView: LIST_VIEW
     }
   }
@@ -144,7 +144,9 @@ class Home extends React.Component {
               onDeleteItem={this.deleteItem}
             />
           )}
-          {tabView === CHART_VIEW && <h1>这里是图表区域</h1>}
+          {tabView === CHART_VIEW && (
+            <h1 className='chart-title'>这里是图表区域</h1>
+          )}
         </div>
       </>
     )
