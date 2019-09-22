@@ -1,7 +1,7 @@
 import React from 'react'
 import logo from '../logo.svg'
+import Ionicon from 'react-ionicons'
 import PriceList from '../components/PriceList'
-import ViewTab from '../components/ViewTab'
 import MonthPicker from '../components/MonthPicker'
 import CreateBtn from '../components/CreateBtn'
 import {
@@ -13,6 +13,7 @@ import {
   padLeft
 } from '../utility'
 import TotalPrice from '../components/TotalPrice'
+import { Tabs, Tab } from '../components/Tabs'
 const items = [
   {
     id: 1,
@@ -50,18 +51,19 @@ const newItem = {
   date: '2019-10-11',
   cid: 1
 }
+const tabsText = [LIST_VIEW, CHART_VIEW]
 class Home extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       items,
       currentDate: parseToYearAndMonth('2019/10/01'),
-      tabView: LIST_VIEW
+      tabView: tabsText[0]
     }
   }
-  changeView = view => {
+  changeView = index => {
     this.setState({
-      tabView: view
+      tabView: tabsText[index]
     })
   }
   changeDate = (year, month) => {
@@ -135,7 +137,26 @@ class Home extends React.Component {
           </div>
         </header>
         <div className='content-area py-3 px-3'>
-          <ViewTab activeTab={tabView} onTabChange={this.changeView} />
+          <Tabs activeIndex={0} onTabChange={this.changeView}>
+            <Tab>
+              <Ionicon
+                className='rounded-circle mr-2'
+                fontSize='25px'
+                color={'#007bff'}
+                icon='ios-paper'
+              />
+              列表模式
+            </Tab>
+            <Tab>
+              <Ionicon
+                className='rounded-circle mr-2'
+                fontSize='25px'
+                color={'#007bff'}
+                icon='ios-pie'
+              />
+              图表模式
+            </Tab>
+          </Tabs>
           <CreateBtn onClick={this.createItem} />
           {tabView === LIST_VIEW && (
             <PriceList
