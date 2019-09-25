@@ -124,4 +124,4 @@ class PriceForm extends React.Component {
   }
 }
 
-export default PriceForm
+export { PriceForm }

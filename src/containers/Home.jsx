@@ -14,6 +14,7 @@ import {
 } from '../utility'
 import TotalPrice from '../components/TotalPrice'
 import { Tabs, Tab } from '../components/Tabs'
+import { withContext } from '../WithContext'
 const items = [
   {
     id: 1,
@@ -117,6 +118,9 @@ class Home extends React.Component {
         totalIncome += item.price
       }
     })
+    console.log('---home-width-context---')
+    const { data } = this.props
+    console.log(data)
     return (
       <>
         <header className='App-header'>
@@ -174,4 +178,4 @@ class Home extends React.Component {
   }
 }
 
-export default Home
+export default withContext(Home)
