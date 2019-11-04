@@ -15,12 +15,12 @@ const PriceList = ({ items, onModifyItem, onDeleteItem }) => {
               fontSize='30px'
               style={{ backgroundColor: '#007bff', padding: '5px' }}
               color={'#fff'}
-              icon={item.category.iconName}
+              icon={item.category && item.category.iconName}
             />
           </span>
           <span className='col-5'> {item.title} </span>
           <span className='col-2 font-weight-bold'>
-            {item.category.type === 'income' ? '+' : '-'}
+            {item.category && item.category.type === 'income' ? '+' : '-'}
             {item.price}元
           </span>
           <span className='col-2'>{item.date}</span>

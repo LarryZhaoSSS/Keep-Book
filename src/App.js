@@ -4,7 +4,7 @@ import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Home from './containers/Home'
 import Create from './containers/Create'
-import { flatternArr } from './utility'
+import { flatternArr, ID, parseToYearAndMonth } from './utility'
 export const testCategories = [
   {
     name: '旅行',
@@ -114,10 +114,30 @@ class App extends React.Component {
       items: flatternArr(testItems),
       categories: flatternArr(testCategories)
     }
+    this.actions = {
+      deleteItem: item => {
+        delete this.state.items[item.id]
+        this.setState({
+          items: this.state.items
+        })
+      },
+      createItem: (data, categoryId) => {
+        console.log('createItem')
+        console.log(categoryId)
+        const newId = ID()
+        const parsedDate = parseToYearAndMonth(data.date)
+        data.monthCategory = `${parsedDate.year}-${parsedDate.month}}`
+        data.timestamp = new Date(data.date).getTime()
+        const newItem = { ...data, id: newId, cid: categoryId }
+        this.setState({
+          items: { ...this.state.items, [newId]: newItem }
+        })
+      }
+    }
   }
   render() {
     return (
-      <AppContext.Provider value={{ state: this.state }}>
+      <AppContext.Provider value={{ state: this.state, actions: this.actions }}>
         <Router>
           <div className='App'>
             <div className='container pb-5'>

@@ -1,5 +1,6 @@
 import React from 'react'
 import logo from '../logo.svg'
+import { withRouter } from 'react-router-dom'
 import Ionicon from 'react-ionicons'
 import PriceList from '../components/PriceList'
 import MonthPicker from '../components/MonthPicker'
@@ -73,53 +74,47 @@ class Home extends React.Component {
     })
   }
   modifyItem = modifiedItem => {
-    const modifiedItems = this.state.items.map(item => {
-      if (item.id === modifiedItem.id) {
-        return { ...item, title: '新标题' }
-      } else {
-        return item
-      }
-    })
-    this.setState({
-      items: modifiedItems
-    })
+    this.props.history.push(`/edit/${modifiedItem.id}`)
   }
   createItem = () => {
-    this.setState({
-      items: [newItem, ...this.state.items]
-    })
+    this.props.history.push('/create')
   }
   deleteItem = deletedItem => {
-    const filteredItems = this.state.items.filter(
-      item => item.id !== deletedItem.id
-    )
-    this.setState({
-      items: filteredItems
-    })
+    this.props.actions.deleteItem(deletedItem)
   }
   render() {
-    const { items, currentDate, tabView } = this.state
-    const itemsWithCatgory = items
-      .map(item => {
-        item.category = categories[item.cid]
-        return item
-      })
-      .filter(item => {
-        return item.date.includes(
-          `${currentDate.year}-${padLeft(currentDate.month)}`
-        )
-      })
+    const { currentDate, tabView } = this.state
+    const { data } = this.props
+    const { items } = data
+    // const itemsWithCategory = items
+    //   .map(item => {
+    //     item.category = categories[item.cid]
+    //     return item
+    //   })
+    //   .filter(item => {
+    //     return item.date.includes(
+    //       `${currentDate.year}-${padLeft(currentDate.month)}`
+    //     )
+    //   })
+    const itemsWithCategory = Object.keys(items).map(id => {
+      items[id].category = categories[items[id].cid]
+      return items[id]
+    })
     let totalIncome = 0
     let totalOutcome = 0
-    itemsWithCatgory.forEach(item => {
-      if (item.category.type === TYPE_OUTCOME) {
+    itemsWithCategory.forEach(item => {
+      console.log('-----')
+      console.log(item)
+      if (item.category && item.category.type === TYPE_OUTCOME) {
         totalOutcome += item.price
       } else {
         totalIncome += item.price
       }
     })
+
     console.log('---home-width-context---')
-    const { data } = this.props
+    console.log(this.props)
+    // const { data } = this.props
     console.log(data)
     return (
       <>
@@ -164,7 +159,7 @@ class Home extends React.Component {
           <CreateBtn onClick={this.createItem} />
           {tabView === LIST_VIEW && (
             <PriceList
-              items={itemsWithCatgory}
+              items={itemsWithCategory}
               onModifyItem={this.modifyItem}
               onDeleteItem={this.deleteItem}
             />
@@ -178,4 +173,4 @@ class Home extends React.Component {
   }
 }
 
-export default withContext(Home)
+export default withRouter(withContext(Home))
